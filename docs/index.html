@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Coding Assistant Instructions Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI Coding Assistant Instructions Generator</h1>
+        
+        <p>プロジェクトの特性に応じた AI開発ツール（GitHub Copilot、Cursor、Claude Code等）の指示文テンプレートを生成します。必要な項目を選択して、カスタマイズされた指示文を作成してください。</p>
+
+        <div class="notice">
+            <h3>⚠️ 重要な注意事項</h3>
+            <ul>
+                <li>生成されたテンプレートはあくまで<strong>ベース</strong>です。プロジェクト固有の要件に応じてカスタマイズしてください。</li>
+                <li>指示文は継続的に改良されています。定期的に最新版を確認することをお勧めします。</li>
+                <li>複雑なプロジェクトでは、段階的に指示を追加していく方が効果的です。</li>
+            </ul>
+        </div>
+
+        <form id="templateForm">
+            <div class="form-group">
+                <label for="projectName">プロジェクト名</label>
+                <input type="text" id="projectName" placeholder="例: my-awesome-project" required>
+            </div>
+
+            <div class="form-group">
+                <label for="projectDescription">プロジェクト概要</label>
+                <textarea id="projectDescription" rows="3" placeholder="例: ユーザー管理機能を持つWebアプリケーション" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="projectType">プロジェクト種別</label>
+                <select id="projectType" required>
+                    <option value="">選択してください</option>
+                    <option value="SIMPLE_SCRIPT">簡単なスクリプト・学習用</option>
+                    <option value="WEB_APPLICATION">Webアプリケーション</option>
+                    <option value="API_BACKEND">APIバックエンド</option>
+                    <option value="DATA_ANALYSIS">データ分析・機械学習</option>
+                    <option value="CUSTOM">カスタム（コア機能のみ）</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="operatingSystem">OS環境</label>
+                <select id="operatingSystem" required>
+                    <option value="">選択してください</option>
+                    <option value="LINUX">Linux</option>
+                    <option value="MACOS">macOS</option>
+                    <option value="WINDOWS">Windows</option>
+                    <option value="MULTI_PLATFORM">マルチプラットフォーム</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>使用言語（複数選択可）</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="python" name="languages" value="PYTHON">
+                        <label for="python">Python</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="javascript" name="languages" value="JAVASCRIPT">
+                        <label for="javascript">JavaScript</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="typescript" name="languages" value="TYPESCRIPT">
+                        <label for="typescript">TypeScript</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="java" name="languages" value="JAVA">
+                        <label for="java">Java</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="htmlcss" name="languages" value="HTML_CSS">
+                        <label for="htmlcss">HTML/CSS</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="csharp" name="languages" value="CSHARP">
+                        <label for="csharp">C#</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="go" name="languages" value="GO">
+                        <label for="go">Go</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rust" name="languages" value="RUST">
+                        <label for="rust">Rust</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="other" name="languages" value="OTHER">
+                        <label for="other">その他</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>追加機能（オプション）</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="domainDrivenDesign" name="features" value="DOMAIN_DRIVEN_DESIGN">
+                        <label for="domainDrivenDesign">ドメイン駆動設計</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="testDrivenDevelopment" name="features" value="TEST_DRIVEN_DEVELOPMENT">
+                        <label for="testDrivenDevelopment">テスト駆動開発</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="documentationRules" name="features" value="DOCUMENTATION_RULES">
+                        <label for="documentationRules">ドキュメント作成ルール</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="codeQuality" name="features" value="CODE_QUALITY">
+                        <label for="codeQuality">コード品質ルール</label>
+                    </div>
+                    <div class="checkbox-item" id="scssOption" style="display: none;">
+                        <input type="checkbox" id="scssSupport" name="features" value="SCSS_SUPPORT">
+                        <label for="scssSupport">SCSS対応</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" onclick="generateTemplate()">📄 テンプレート生成</button>
+            <button type="button" class="secondary-btn" onclick="resetForm()">🔄 リセット</button>
+        </form>
+
+        <div id="output" class="output-container" style="display: none;">
+            <h2>📋 生成された指示文</h2>
+            <p>以下の内容を使用するAI開発ツールに合わせて配置してください：</p>
+            <ul>
+                <li><strong>GitHub Copilot:</strong> <code>.github/copilot-instructions.md</code></li>
+                <li><strong>Cursor:</strong> <code>.cursorrules</code></li>
+                <li><strong>Claude Code:</strong> VS Code設定</li>
+                <li><strong>その他:</strong> 各ツールのドキュメントに従って設定</li>
+            </ul>
+            <p><small>※ 動作は各ツールの仕様により異なる場合があります</small></p>
+            
+            <div class="template-output">
+                <button class="copy-btn" onclick="copyToClipboard()">📋 コピー</button>
+                <pre id="templateContent"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="template-generator.js"></script>
+</body>
+</html>
